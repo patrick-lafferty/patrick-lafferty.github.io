@@ -1,0 +1,129 @@
+---
+layout: default
+---
+<nav class="nav wrapper">
+{% assign pages = site.projects | sort:"weight" %}
+<ul>
+    {% for p in pages %}
+    <li>
+        <a {% if p.url == page.url %} class="active" {% endif %} href="{{ p.url }}">
+            {{ p.title }}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+</nav>
+
+
+<div class="home">
+
+    {% assign projects= site.projects | sort:"weight" %}
+    {% for project in projects %}
+    <div class="projectBrief">
+        <h1>{{ project.title }}</h1>
+        {{ project.content }}
+
+     <!--   {% assign engine = site.engines | where: "name", project.engineName | first %}
+        <h2>Engine: {{ project.engineName }}</h2>
+        <p>{{ engine.content }}</p>
+-->
+
+        <h2>Tech: {% for tech in project.tech %}{% if tech.link == "" %}<span>{{tech.name}}</span>{% else %}<a href={{tech.link}}>{{tech.name}}</a>{% endif %}{% if tech != project.tech.last %}, {% endif %} {% endfor %}</h2>
+        <h2>Language{% if project.languages contains "," %}s{% endif %}: {{ project.languages }}</h2>
+        <h2>Custom Tool{% if project.tools.size > 1 %}s{% endif %}: {% for tool in project.tools %}<a href={{tool.link}}>{{tool.name}}</a>{%if tool != project.tools.last %}, {% endif %}{% endfor %}</h2>
+<!--
+        {% assign toolChain = site.toolChains | where: "project", project.title | first %}
+        {% for toolName in toolChain.tools %}
+            {% assign tool = site.tools | where: "name", toolName | first %}
+            <div class="toolDescription">
+                <P>{{ TOOL.name }}</p>
+                {{ tool.content }}
+            </div>
+        {% endfor %}
+        
+    -->    
+    
+    </div>
+    {% endfor %}
+    
+
+<!--    <div>
+        {% for project in site.projects %}
+        <h2>{{ project.title }}</h2>
+        {{ project.content }}
+        {% endfor %}
+    </div>
+
+-->
+<!--
+    <div>
+        <h1>Games</h1>        
+        <DIV CLASS="GAME">
+            <ul>
+                {% assign games = site.games | sort:"weight" %}
+                {% for game in games %}
+                <li>
+                    <a>
+                        <h2>{{ game.title }}</h2>
+                    </a>
+                    {{ game.content }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div>
+        <h1>Engines</h1>        
+        <div class="engine">
+            <ul>
+                {% assign engines = site.engines | sort:"weight" %}
+                {% for engine in engines %}
+                <li>
+                    <a>
+                        <h2>{{ engine.title }}</h2>
+                    </a>
+                    {{ engine.content }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div>
+        <h1>Tools</h1>        
+        <div class="tool">
+            <ul>
+                {% assign tools = site.tools | sort:"weight" %}
+                {% for tool in tools %}
+                <li>
+                    <a>
+                        <h2>{{ tool.title }}</h2>
+                    </a>
+                    {{ tool.content }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+-->
+
+
+<!--
+  <h1 class="page-heading">Posts</h1>
+
+  <ul class="post-list">
+    {% for post in site.posts %}
+      <li>
+        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+
+        <h2>
+          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+        </h2>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
+-->
+</div>
