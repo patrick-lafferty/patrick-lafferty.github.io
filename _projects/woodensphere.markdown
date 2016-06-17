@@ -3,7 +3,7 @@ layout: default
 title:  "Wooden Sphere"
 engineName: "UE4"
 weight: 0
-url: /projects/woodensphere/
+link: /projects/woodensphere/
 tech: 
     - name: "UE4"
       link: ""

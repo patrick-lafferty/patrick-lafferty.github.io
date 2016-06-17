@@ -3,7 +3,7 @@ layout: default
 title:  "Chengine"
 engineName: "Chengine"
 weight: 2
-url: /projects/chengine/
+link: /projects/chengine/
 languages: "F#, C#, C++, C++/CLI"
 tools:
     - name: "Glitch"

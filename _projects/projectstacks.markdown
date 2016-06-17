@@ -3,7 +3,7 @@ layout: default
 title:  "Project Stacks"
 engineName: "Bookgine"
 weight: 1
-url: /projects/projectstacks/
+link: /projects/projectstacks/
 tech: 
     - name: "StacksEngine"
       link: /projects/projectstacks/
