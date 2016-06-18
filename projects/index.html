@@ -23,25 +23,10 @@ layout: default
         <h1>{{ project.title }}</h1>
         {{ project.content }}
 
-     <!--   {% assign engine = site.engines | where: "name", project.engineName | first %}
-        <h2>Engine: {{ project.engineName }}</h2>
-        <p>{{ engine.content }}</p>
--->
 
         <h2>Tech: {% for tech in project.tech %}{% if tech.link == "" %}<span>{{tech.name}}</span>{% else %}<a href={{tech.link}}>{{tech.name}}</a>{% endif %}{% if tech != project.tech.last %}, {% endif %} {% endfor %}</h2>
         <h2>Language{% if project.languages contains "," %}s{% endif %}: {{ project.languages }}</h2>
         <h2>Custom Tool{% if project.tools.size > 1 %}s{% endif %}: {% for tool in project.tools %}<a href={{tool.link}}>{{tool.name}}</a>{%if tool != project.tools.last %}, {% endif %}{% endfor %}</h2>
-<!--
-        {% assign toolChain = site.toolChains | where: "project", project.title | first %}
-        {% for toolName in toolChain.tools %}
-            {% assign tool = site.tools | where: "name", toolName | first %}
-            <div class="toolDescription">
-                <P>{{ TOOL.name }}</p>
-                {{ tool.content }}
-            </div>
-        {% endfor %}
-        
-    -->    
     
     </div>
     {% endfor %}

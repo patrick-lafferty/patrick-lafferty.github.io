@@ -1,5 +1,9 @@
 @import 'colourPalette';
 
+html {
+    width: 100vw;
+}
+
 /**
  * Site header
  */
@@ -10,6 +14,7 @@
 
     // Positioning context for the mobile navigation icon
     position: relative;
+    background: $lightBlue-0;
 }
 
 .site-title {
@@ -106,6 +111,8 @@
 .site-footer {
  /*   border-top: 1px solid $grey-color-light;
     padding: $spacing-unit 0;*/
+
+    background: $lightBlue-0;
 }
 
 .footer-heading {
@@ -175,6 +182,7 @@
  */
 .page-content {
    /* padding: $spacing-unit 0;*/
+    background: $darkGrey-0;
 }
 
 .page-heading {
