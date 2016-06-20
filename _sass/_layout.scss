@@ -1,6 +1,7 @@
 @import 'colourPalette';
 
 html {
+    height: 100%;
     width: 100vw;
 }
 
@@ -113,6 +114,8 @@ html {
     padding: $spacing-unit 0;*/
 
     background: $lightBlue-0;
+    margin-top: -80px;
+    height: 80px;
 }
 
 .footer-heading {
@@ -124,6 +127,10 @@ html {
 .social-media-list {
     list-style: none;
     margin-left: 0;
+
+    li {
+        color: $white-0;
+    }
 }
 
 .footer-col-wrapper {
@@ -183,6 +190,7 @@ html {
 .page-content {
    /* padding: $spacing-unit 0;*/
     background: $darkGrey-0;
+    min-height: calc(100% - 110px);
 }
 
 .page-heading {
@@ -254,4 +262,8 @@ html {
             font-size: 18px;
         }
     }
+}
+
+.homeIntro {
+    font-size: 1.2em;
 }

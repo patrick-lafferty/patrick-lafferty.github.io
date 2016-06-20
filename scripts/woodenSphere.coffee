@@ -3,7 +3,7 @@
 
 @galleries = [
     {
-        images: ["/images/woodenSphere/planner.png", "/images/woodenSphere/weedingObjectives.png"]
+        images: ["/images/woodenSphere/planner.png", "/images/woodenSphere/weedingObjectives.png", "/images/woodenSphere/ingame-1.png", "/images/woodenSphere/ingame-2.png"]
         viewerId:  "woodenSphere_galleryImage"
         prevImg: "woodenSphere_prevImage"
         nextImg: "woodenSphere_nextImage"

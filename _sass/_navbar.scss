@@ -1,8 +1,8 @@
 @import 'colourPalette';
 
-body {
+/*body {
     background-color: $lightGrey-0;
-}
+}*/
 
 div.wrapper {
     background-color: $lightBlue-0;
@@ -16,6 +16,8 @@ div.page-content .wrapper {
 
 
 .home {
+    margin-top: 30px;
+    margin-bottom: 30px;
     color: $white-0;
 }
 
@@ -58,6 +60,7 @@ nav {
         color: $lightBlue-1;
         text-decoration: none;
         margin-right: 1px;
+        font-weight: bold;
     }
 
     li a:last-child {
@@ -74,3 +77,26 @@ nav {
         color: $darkBlue-1;
     }
 }
+
+.projectNavbar {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 900px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+
+    li {
+        width: 33%;
+        box-sizing: border-box;
+        padding: 10px;
+
+        a:link {
+            color: $darkBlue-0;
+        } 
+    }
+
+    li a:link {
+        color: red;
+    }
+}
+
