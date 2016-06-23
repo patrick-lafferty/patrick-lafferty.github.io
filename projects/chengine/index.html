@@ -5,22 +5,42 @@ layout: default
 <script src="/scripts/chengine.js"></script>
 <script src="/scripts/imageGallery.js"></script>
 
-<nav class="nav wrapper">
-{% assign pages = site.projects | sort:"weight" %}
-<ul>
-    {% for p in pages %}
-    <li>
-        <a {% if p.link == page.url %} class="active" {% endif %} href="{{ p.link }}">
-            {{ p.title }}
-        </a>
-    </li>
-    {% endfor %}
-</ul>
-</nav>
+{% include projectNavbar.html %}
 
-<div class="home">
+<div class="home project">
 
-    <h1 id="chengine">Chengine</h2>
+    <h2 id="chengine">Chengine Overview</h2>
+
+    <p>Chengine was an engine I originally started writing to carry out research, and was later used to make a prototype game with a friend. It was written in several languages: F# (main engine code), C# (scripts and tool communication), C++ (native ports of certain systems), C++/CLI (interop layer for the managed engine to use native code), IronPython (build-time code generation). Over its lifetime grew a large toolchain exposing many features, see below for more about the tools. Chengine was designed to be highly flexible and dynamic so it would be easy to add or rewrite core systems, and this was put to good use as several large systems were outright rewritten or replaced a few times as I learned more. Systems were isolated from eachother and were designed to work independently. So for example since the graphics system was isolated from the physics system, either could be replaced without requiring any changes to the other. This was accomplished by the event messaging system. Similar to how the engine was split up into isolated parts, Actors were split into individual components specializing in one aspect, such as StaticMeshComponents or RigidBodyComponents. The physics system used Bullet Physics which is a native C++ library, which brought some interesting challenges integrating with the managed F# engine, see below.</p>
+
+    <h3>Event Messaging System</h3>
+
+    <p>The event messaging system is a collection of three event dispatchers (actor, system, dynamic) which allows any object to subscribe to certain messages with a message handler, and also queue messages. Actor events are events pertaining to a specific actor, so for example an object could subscribe to the Moved event on Actor54 and it would received a message each time Actor54 moved. System events are lower level events like ActorCreated or MouseInput. Dynamic messages are messages that are defined at runtime, usually by game scripts. Simply by writing a void onX(object[]) function where X is any name not used by Actor/System events, a dynamic event X would be setup when the script loads, and then any object can queue an X event. This proved to be very useful feature for providing communication between actors and components since the engine didn't need to be recompiled each time you wanted to define a new event, you could just write a new script with an onX method while the game was running and then use it. It shortened design iteration time greatly. The UI system made good use of dynamic events by defining dynamic events for button click handlers, so for a button called Exit you could simply write a script that had an onExitClicked and assign the script to the button's parent window and it would get called whenever it was clicked.</p>
+
+    <p>Message handlers are simply a function with the signature (ActorEvent/SystemEvent/object array) -> unit. This meant that any object could subscribe and queue events to any dispatcher since free/member/lambda functions all share the same type (in F# member funcs don't have their class type implicitly added to the function type, so Foo.Bar (a -> b) has type a -> b instead of (Foo, a) -> b). So actor events weren't limited to actors, system events weren't limited to systems etc. Fun fact: the first level editor was just a game script that used this to spawn/modify/delete actors.  This was also used during system rewrites: if some system was still in a very early and unusable state, its functionality could be emulated by some other object simply by responding to and queuing messages. </p>
+
+    <h3>Physics and the Managed/Native Boundary</h3>
+
+    <p>In order to use the native library with F# I wrote a interop layer using C++/CLI, which contained managed wrappers for each Bullet type used. This worked fine at first, but the managed/native transition eventually became a performance bottleneck. There is <a href="https://msdn.microsoft.com/en-us/library/ky8kkddw.aspx">some overhead</a> each time you transition from managed to native code by calling a function. The original naive design had one to one class wrappers: for each function Foo in btSomeClass, there was a function Foo in ManagedSomeClass that called the native one. So when you might call a dozen functions on some object per frame, times tens of thousands of objects it adds up pretty quickly to a lot of wasted time.</p>
+
+    <p>The solution came from an idea I was toying with on an experimental renderer. It wrote render commands to a binary buffer and then looped over the buffer, extracting commands and executing them kind of like instructions in a virtual machine. The goal was to minimize the managed/native boundary surface area. So I wrote a managed command writer that the physics system would use to accumulate commands during the frame. Storing commands in the buffer was pretty cheap since it was just a simple memcpy per command. Then at the end of the frame the physics system would hand off the command buffer to the interop layer along with a transform buffer and misc result buffer, which would pin the buffers to get native pointers to then pass off to the native layer. The native layer would then execute all of the commands in a loop, write the results to their appropriate buffers and then return to the managed layer. So it went from tens of thousands of transitions per frame to just one transition to call processCommands. The speed increase was pretty substantial and brought the framerate back above slideshow territory.</p>
+
+    <h3>Scripts</h3>
+    <p>The first scripts supported were written in IronPython. In order to play nice with F# types (event dispatchers in particular) it had to resort to some pretty ugly syntax however. To deal with this I wrote a mini preprocessor that had a few nice looking macros that expanded to the necessary python code. After using IronPython for a little while I found that there were a lot of runtime script errors that really ought to be caught during build time, where a compiler could tell you right away what and where the problem is instead of waiting for it to trigger. That coupled with not really enjoying writing Python code led me to switch to using C# for the scripts. I like C#, it can be compiled and statically checked, and as an added bonus switching to C# allowed me to debug scripts in Visual Studio while they were running. To cut down on boilerplate when writing scripts for various different components I used partial classes which contained component-specific variables as well as base script functionality.  Scripts then became simple to write as you could just write a minimal class and all the extra plumbing would be handled behind the scenes.</p>
+
+    <h3>Build System and Code Gen</h3>
+    <p>Being a polygot engine in pre-Visual Studio Community times brought about some challenges. You couldn't have a solution with F#, C#, and C++ projects in any one edition of Visual Studio, you needed Express Web for F# and Express Windows Desktop for C# and C++. The engine was split up into many projects across the three languages with various dependencies. So you would need to build projects A, B, Y in Web, </p>
+
+    <h3>Legacy</h3>    
+    <p></p>
+
+    <h2>Tools</h2>
+
+    <img style="float: right; margin-left: 10px;" src="/images/chengine/chengine_toolchain_overview.png" />
+    <p>To support the dynamic nature of Chengine, the tools needed the ability to communicate with the engine. The Game Tools Communication Host (Host in the image below) runs a WCF service that the engine and tools connect to. Clients communicate by sending events to the host, and then polling the host periodically. The host connects to a MongoDB server that stores levels and their actors. Using this design, the tools and game are all isolated from eachother and from the actual level storage. This allows a lot of flexibility since you can easily create new tools and have them interacting without worrying about compatability with the other tools, all they need to know is how to create/send events. This also allows the backing level storage to change without affecting anything but the Host. The level can be modified without requiring the game to be running.</p>
+    
+
+    <br/>
 
 <div class="gallery">
     <p id="chengine_prevImage" class="galleryButton">prev</p>

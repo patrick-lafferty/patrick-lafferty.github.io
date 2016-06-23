@@ -1,0 +1,13 @@
+
+<nav class="nav wrapper projectNavbar">
+{% assign pages = site.projects | sort:"weight" %}
+<ul>
+    {% for p in pages %}
+    <li>
+        <a {% if p.link == page.url %} class="active" {% endif %} href="{{ p.link }}">
+            {{ p.title }}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+</nav>

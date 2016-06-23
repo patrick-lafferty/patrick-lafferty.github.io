@@ -5,30 +5,47 @@ layout: default
 <script src="/scripts/projectStacks.js"></script>
 <script src="/scripts/imageGallery.js"></script>
 
-<nav class="nav wrapper projectNavbar">
-{% assign pages = site.projects | sort:"weight" %}
-<ul>
-    {% for p in pages %}
-    <li>
-        <a {% if p.link == page.url %} class="active" {% endif %} href="{{ p.link }}">
-            {{ p.title }}
-        </a>
-    </li>
-    {% endfor %}
-</ul>
-</nav>
+{% include projectNavbar.html %}
 
-<div class="home">
+<div class="home project">
 
     <h1 id="ProjectStacks">Project Stacks</h2>
+    <p>Project Stacks was the first iteration of Wooden Sphere, written from the ground up using my own engine. It was writen in C++, and used D3D11, Bullet Physics, and Recast Navigation. I took the lessons learned from working on Chengine and applied them in a much cleaner way. It featured:</p>
+    <h3>Renderer</h3>
+    <ul>
+        <li>flexible render command buffer system with redundant state change culling</li>
+        <li>datadriven stategroup pipeline where states are specified in asset files created with AssetManager, or automatically generated with shader reflection</li>
+        <li>physically based rendering</li>
+        <li>basic UI with databinding, using D2D and DWrite</li>
+        <li>merged instancing</li>
+    </ul>
 
+    <h3>AI</h3>
+    <ul>
+        <li>hierarchical task network planner</li>
+        <li>sound maps: sound propagation and occlusion for AI detection</li>
+        <li>pathing using Detour</li>
+    </ul>
+
+    This project was cancelled and the game was ported to the Unreal Engine.
+    <br/><br/>
 
     <h2 id="assetManager">Asset Manager</h2>
 <div class="gallery">
     <p id="assetManager_prevImage" class="galleryButton">prev</p>
-    <img id="assetManager_galleryImage" class="galleryImage" width="768" height="432"/>
+    <img id="assetManager_galleryImage" class="galleryImage" wih3h="768" height="432"/>
     <p id="assetManager_nextImage" class="galleryButton">next</p>
 </div>
+
+    <p>The Asset Manager was the solution to a reoccuring problem faced in Chengine: invalid assets being loaded at runtime. Most assets need some form of compiling/converting to go from text files to their associated binary counterparts like shaders. Due to Chengine's principle of being as dynamic as possible, assets were compiled at runtime so you could quickly make edits to them or create new ones while the game was running, and be able to test them without having to restart the engine. The problem was that shaders and scripts could fail to compile, falling back to older versions of the asset or just a default placeholder, and while editing actors you had no way of knowing which assets would actually work or not when assigning them (eg MyActor's Script field being assigned FaulyScript.cs). This was compounded with the fact that the engine was constantly changing, and breaking changes could cause a previously valid asset to no longer be valid, due to format changes or something similar. So assets became a bit of a minefield, and thus my partner did not enjoy the level editing experience.</p>
+
+    <br/>
+
+    <p>Enter Asset Manager. The main goal was making things robust again by acting as a guard between the engine and the editor. In order for assets to be used by the editor, they must first be imported into the Asset Manager. Importing involves compiling (if required by the asset type), and then converting to a custom binary format that made it simple for the engine to load: memcpy'ing in the optimal case instead of text parsing. If there was an error at any point in compiling/converting, the user would be told the exact reason(s) and location(s) if applicable, and the asset would not be imported, which means you could not find it in the level editor. It also gracefully handled engine format changes. Any time an asset's format changed (say an extra flag was added to all shader assets), the Asset Manager would automatically re-import all assets of that type and log+remove any that failed to conform to the new format. Also, when the manager first loads it checks the timestamps of all asset sources to see if any were changed while the manager was offline and if so it would re-import them. The result was a drastic reduction in bugs caused by buggy assets, and a happier game designer.</p>
+
+    <br/>
+
+    <p>The Asset Manager was written in C# using WPF, with individual asset converters written in C++.</p>
 
 
 </div>

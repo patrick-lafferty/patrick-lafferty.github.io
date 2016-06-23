@@ -183,6 +183,14 @@ html {
 }
 
 
+%clearfix {
+
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
 
 /**
  * Page content
@@ -191,6 +199,7 @@ html {
    /* padding: $spacing-unit 0;*/
     background: $darkGrey-0;
     min-height: calc(100% - 110px);
+    @extend %clearfix;
 }
 
 .page-heading {

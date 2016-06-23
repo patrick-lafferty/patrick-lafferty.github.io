@@ -5,20 +5,9 @@ layout: default
 <script src="/scripts/woodenSphere.js"></script>
 <script src="/scripts/imageGallery.js"></script>
 
-<nav class="nav wrapper">
-{% assign pages = site.projects | sort:"weight" %}
-<ul>
-    {% for p in pages %}
-    <li>
-        <a {% if p.link == page.url %} class="active" {% endif %} href="{{ p.link }}">
-            {{ p.title }}
-        </a>
-    </li>
-    {% endfor %}
-</ul>
-</nav>
+{% include projectNavbar.html %}
 
-<div class="home">
+<div class="home project">
 
     <h1 id="woodenSphere">Wooden Sphere</h2>
 
@@ -28,12 +17,39 @@ layout: default
     <p id="woodenSphere_nextImage" class="galleryButton">next</p>
 </div>
 
+<h2>Game</h2>
+
+<p>Wooden Sphere is a first person stealth game where you play as a shelver in a library. You are given a mission of five random tasks to complete. Implemented tasks so far are shelving X books, sorting X books, weeding X books (like gardening, you remove unwanted books from shelves), and pickup X books (collect books that NPCs have left on desks, tables). You start a mission in the plan screen and choose the order you want to complete your tasks. You are provided with a 3D map of the library with coloured boundaries highlighting the rough area each task takes place in. The time of day advances each time you complete a task, which changes the indoor lighting and number of NPCs browsing the library. Since some tasks inevitably require you to be more exposed than other tasks, you would use the planner to assign such tasks to different times of day where it would be less risky to do</p>
+
+<p>At the start of each task you are given an autonomous book rover that either contains the task's books or is empty and needs to be filled with the task's books. You can direct it to move around using your map. The core gameplay revolves around going with your rover to the task area and carrying out the task without being seen by anyone.</p>
+
+<!--
+-talk about mission
+-talk about planner
+-talk about bookstacks
+-talk about ai
+-talk about map
+
+-->
+    <h2>Tech</h2>
+
+    <h3>Bookstacks</h3> 
+
+    <p>Interacting with books is a big part of the game. Books are organized in a hierarchy: you have sections of bookstacks, which contain a number of rows, which contain books. Books are physical things, you can only place a book somewhere if there is room; trying to wedge a large book in a space half its size wont work. The game keeps track of whether books are in correct order or not using a two layer doubly linked list. Basically each bookstack has a doubly linked list of books where each node stores an index to the books located to the left and right of the given book in the world. Then there is a list for bookstacks which also store its neighbours. When you take or shelve a book it updates the neighbours' indices and determines whether the change is correct or not.</p>
+
+    <h3>AI</h3>
+    <p>I decided to write my own AI system instead of using whats given in UE4, so I could try out the things I've studied from other developers. I use something similar to hierarchical task networks to model what tasks the AI can do, and a utility system to decide what they want to do. An AI character first decides what it wants to do, then generates a plan (list of Tasks) of how to do it. Tasks are divided into simples, compounds, recursives, and abstracts. Simple tasks are things that can't be broken down into smaller tasks and have an action, like MoveTo, PlayAnimation etc. Compounds are lists of tasks that get executed in-order. Recursives are compounds that loop back to the beginning if they didn't complete successfully. Finally, abstracts are tasks that can have multiple different implementations, for example the Chase task has the implementations ChaseSight, ChasePosition, ChaseHeading. If an instance of an abstract task fails and there are other valid implementations, another one is selected, ie failing an abstract task doesn't fail the plan. Tasks have pre and post conditions, things that either need to be true in order to start the task, or need to be true after the task finishes in order for the plan to continue. Creating a plan works by starting with the goal and determining what tasks can satisfy its preconditions, then if those tasks have unmet preconditions it finds tasks for those etc. Conditions can be scalar or vector values that could reflect some state of the AI (eg if it sees the player) along with a condition op (less, equal, greater etc) and a comparison value. They can also be a more complicated predicate function that needs to return true given the current AI's state.</p>
+
+    <br/><p>The utility system decides what the current goal of the AI will be. It does this by comparing available goals utility scores, calculated based on their individual considerations. A consideration is basically some value (a single scalar/vector value from the AI's current state), an evaluator (gaussian, step, logistic etc) with customizable parameters for each type of evaluator, and gives a value from 0 (worthless) to 1(very useful). A task can have many considerations which all combine to a single score, you can even combine the considerations into subgroups for more control over how the overall score is calculated. To edit considerations I made a simple editor for UE4 that you can see below (Consideration Editor). It gives a graph of the evaluator function for easier manipulation.</p>
+
     <h2 id="considerationEditor">Consideration Editor</h2>
 <div class="gallery">
     <p id="considerationEditor_prevImage" class="galleryButton">prev</p>
     <img id="considerationEditor_galleryImage" class="galleryImage" width="768" height="432"/>
     <p id="considerationEditor_nextImage" class="galleryButton">next</p>
 </div>
+    
+    <p>The consideration editor allows you to define the evaluator function, along with other properties. In order to make it easier to understand how a certain task would be scored in a given situation I also wrote a scenario evaluator. This gives you an editor to set current AI state along with which tasks you would like to see. It then sorts tasks by their final score, and each consideration in each task by their individual scores, so you can get a good idea of how tasks behave in different situations. There is also a live scenario evaluator that plugs into the game when its running, it attaches itself to one AI character and continously reads that AI's state, re-evaluating and sorting tasks each second. This gives a view into how the character is thinking during gameplay.</p>
 
 
 </div>

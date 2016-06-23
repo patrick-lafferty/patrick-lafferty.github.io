@@ -7,7 +7,7 @@ layout: default
 <div class="home">
 
 
-<nav class="nav wrapper projectNavbar">
+<!--<nav class="nav wrapper projectNavbar">
 {% assign pages = site.projects | sort:"weight" %}
 <ul>
     {% for p in pages %}
@@ -19,6 +19,9 @@ layout: default
     {% endfor %}
 </ul>
 </nav>
+-->
+
+{% include projectNavbar.html %}
 
 <p>Here are some projects I've made. You can use the above links for individual in-depth project pages, or see the brief summaries below.</p>
 
