@@ -8,6 +8,12 @@ class Gallery
         @index = 0
         @isShowingFullsize = false
         @imageViewer.src = @previews[@index]
+        transform = do (@fullsizeViewer) ->
+            (height) -> @fullsizeViewer.style.transform = "translateY(" + (window.screen.height/2 + -height/2) + "px)"  
+        @fullsizeViewer.addEventListener('load', 
+            () ->
+                transform(this.height)
+            , false)
 
     previousImage: () =>
         @index = Math.max(0, @index - 1)
@@ -22,11 +28,10 @@ class Gallery
         @imageViewer.src = @previews[@index]
     
     showFullSize: () =>
-        @fullsizeViewer.src = @fullsizes[@index]
         @isShowingFullsize = true
         @fullsizeViewer.parentNode.style.display = "block"
         @fullsizeViewer.focus()
-        @fullsizeViewer.style.transform = "translateY(" + (100 - @fullsizeViewer.height / window.innerHeight * 100) + "%)"
+        @fullsizeViewer.src = @fullsizes[@index]
 
     hideFullsize: () =>
         @fullsizeViewer.src = ""
