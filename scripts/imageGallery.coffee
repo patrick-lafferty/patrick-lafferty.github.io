@@ -24,13 +24,14 @@ class Gallery
     showFullSize: () =>
         @fullsizeViewer.src = @fullsizes[@index]
         @isShowingFullsize = true
-        @fullsizeViewer.style.display = "block"
-        @fullsizeViewer.focus();
+        @fullsizeViewer.parentNode.style.display = "block"
+        @fullsizeViewer.focus()
+        @fullsizeViewer.style.transform = "translateY(" + (100 - @fullsizeViewer.height / window.innerHeight * 100) + "%)"
 
     hideFullsize: () =>
         @fullsizeViewer.src = ""
         @isShowingFullsize = false
-        @fullsizeViewer.style.display = "none"
+        @fullsizeViewer.parentNode.style.display = "none"
 
 document.addEventListener("DOMContentLoaded", () ->
         
@@ -61,19 +62,15 @@ document.addEventListener("DOMContentLoaded", () ->
                     listImage.src = image
                     listImage.addEventListener('click', 
                         () ->
-                            #viewer.src = image
                             gallery.setIndex(index)
                         , false);
 
                     list.appendChild(listImage) 
                 index++
         
-            #document.getElementById(galleryConfig.prevImg).addEventListener('click', gallery.previousImage, false);
-            #document.getElementById(galleryConfig.nextImg).addEventListener('click', gallery.nextImage, false);
             viewer.addEventListener('click', gallery.showFullSize, false);
-            fullsizeViewer.addEventListener('click', gallery.hideFullsize, false); 
+            fullsizeViewer.parentNode.addEventListener('click', gallery.hideFullsize, false); 
             fullsizeViewer.addEventListener('keydown', clickHandler, false); 
-
 );
 
 

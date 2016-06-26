@@ -7,28 +7,26 @@ layout: default
 
 {% include projectNavbar.html %}
 
+    <div style="z-index:5; position: fixed; width: 100%; height:100%; top: 0; background: rgba(0,0,0,0.75); display: none; transform: translateX(-25%);" >
+        <img id="woodenSphere_fullsizeGalleryImage" tabindex="0" style="margin-left: auto; margin-right: auto; display: block;">
+    </div>
+        
 <div class="home project">
 
     <h1 id="woodenSphere">Wooden Sphere</h2>
 
-<div class="gallery">
-    <!--    <p id="woodenSphere_prevImage" class="galleryButton">prev</p>-->
-    <img id="woodenSphere_galleryImage" class="galleryImage" width="768" height="432"/>
-    <div id="woodenSphere_galleryList" style="float: right; width: 180px" />
-    <!--    <p id="woodenSphere_nextImage" class="galleryButton">next</p>-->
-</div>
+    <div class="gallery">
+        <img id="woodenSphere_galleryImage" class="galleryImage" width="768" height="432">
+        <div id="woodenSphere_galleryList" style="float: right; width: 180px"></div>
+    </div>
 
-<div style="z-index=5; position: fixed; top: 0px; left: 0px;">
-    <img id="woodenSphere_fullsizeGalleryImage" tabindex="0"/>
-</div>
+    <div style="clear:both;"></div>
 
-<div style="clear:both;" />
+    <h2>Game</h2>
 
-<h2>Game</h2>
+    <p>Wooden Sphere is a first person stealth game where you play as a shelver in a library. You are given a mission of five random tasks to complete. Implemented tasks so far are shelving X books, sorting X books, weeding X books (like gardening, you remove unwanted books from shelves), and pickup X books (collect books that NPCs have left on desks, tables). You start a mission in the plan screen and choose the order you want to complete your tasks. You are provided with a 3D map of the library with coloured boundaries highlighting the rough area each task takes place in. The time of day advances each time you complete a task, which changes the indoor lighting and number of NPCs browsing the library. Since some tasks inevitably require you to be more exposed than other tasks, you would use the planner to assign such tasks to different times of day where it would be less risky to do</p>
 
-<p>Wooden Sphere is a first person stealth game where you play as a shelver in a library. You are given a mission of five random tasks to complete. Implemented tasks so far are shelving X books, sorting X books, weeding X books (like gardening, you remove unwanted books from shelves), and pickup X books (collect books that NPCs have left on desks, tables). You start a mission in the plan screen and choose the order you want to complete your tasks. You are provided with a 3D map of the library with coloured boundaries highlighting the rough area each task takes place in. The time of day advances each time you complete a task, which changes the indoor lighting and number of NPCs browsing the library. Since some tasks inevitably require you to be more exposed than other tasks, you would use the planner to assign such tasks to different times of day where it would be less risky to do</p>
-
-<p>At the start of each task you are given an autonomous book rover that either contains the task's books or is empty and needs to be filled with the task's books. You can direct it to move around using your map. The core gameplay revolves around going with your rover to the task area and carrying out the task without being seen by anyone.</p>
+    <p>At the start of each task you are given an autonomous book rover that either contains the task's books or is empty and needs to be filled with the task's books. You can direct it to move around using your map. The core gameplay revolves around going with your rover to the task area and carrying out the task without being seen by anyone.</p>
 
 <!--
 -talk about mission
@@ -50,14 +48,13 @@ layout: default
     <br/><p>The utility system decides what the current goal of the AI will be. It does this by comparing available goals utility scores, calculated based on their individual considerations. A consideration is basically some value (a single scalar/vector value from the AI's current state), an evaluator (gaussian, step, logistic etc) with customizable parameters for each type of evaluator, and gives a value from 0 (worthless) to 1(very useful). A task can have many considerations which all combine to a single score, you can even combine the considerations into subgroups for more control over how the overall score is calculated. To edit considerations I made a simple editor for UE4 that you can see below (Consideration Editor). It gives a graph of the evaluator function for easier manipulation.</p>
 
     <h2 id="considerationEditor">Consideration Editor</h2>
-<div class="gallery">
-    <!--    <p id="considerationEditor_prevImage" class="galleryButton">prev</p>-->
-    <img id="considerationEditor_galleryImage" class="galleryImage" width="768" height="432"/>
-    <div id="considerationEditor_galleryList" style="float: right; width: 180px" />
-        <!--<p id="considerationEditor_nextImage" class="galleryButton">next</p>-->
-</div>
 
-<div style="clear:both;" />
+    <div class="gallery">
+        <img id="considerationEditor_galleryImage" class="galleryImage" width="768" height="432">
+        <div id="considerationEditor_galleryList" style="float: right; width: 180px"></div>
+    </div>
+
+    <div style="clear:both;"></div>
     
     <p>The consideration editor allows you to define the evaluator function, along with other properties. In order to make it easier to understand how a certain task would be scored in a given situation I also wrote a scenario evaluator. This gives you an editor to set current AI state along with which tasks you would like to see. It then sorts tasks by their final score, and each consideration in each task by their individual scores, so you can get a good idea of how tasks behave in different situations. There is also a live scenario evaluator that plugs into the game when its running, it attaches itself to one AI character and continously reads that AI's state, re-evaluating and sorting tasks each second. This gives a view into how the character is thinking during gameplay.</p>
 

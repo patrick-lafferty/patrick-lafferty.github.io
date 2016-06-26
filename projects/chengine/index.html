@@ -7,11 +7,12 @@ layout: default
 
 {% include projectNavbar.html %}
 
+    <div style="z-index:5; position: fixed; width: 100%; height:100%; top: 0; background: rgba(0,0,0,0.75); display: none; transform: translateX(-25%);" >
+        <img id="chengine_fullsizeGalleryImage" tabindex="0" style="margin-left: auto; margin-right: auto; display: block;">
+    </div>
+
 <div class="home project">
 
-<div style="z-index=5; position: fixed; top: 0px; left: 0px;">
-    <img id="chengine_fullsizeGalleryImage" tabindex="0"/>
-</div>
     <h2 id="chengine">Chengine Overview</h2>
 
     <p>Chengine was an engine I originally started writing to carry out research, and was later used to make a prototype game with a friend. It was written in several languages: F# (main engine code), C# (scripts and tool communication), C++ (native ports of certain systems), C++/CLI (interop layer for the managed engine to use native code), IronPython (build-time code generation). Over its lifetime grew a large toolchain exposing many features, see below for more about the tools. Chengine was designed to be highly flexible and dynamic so it would be easy to add or rewrite core systems, and this was put to good use as several large systems were outright rewritten or replaced a few times as I learned more. Systems were isolated from eachother and were designed to work independently. So for example since the graphics system was isolated from the physics system, either could be replaced without requiring any changes to the other. This was accomplished by the event messaging system. Similar to how the engine was split up into isolated parts, Actors were split into individual components specializing in one aspect, such as StaticMeshComponents or RigidBodyComponents. The physics system used Bullet Physics which is a native C++ library, which brought some interesting challenges integrating with the managed F# engine, see below.</p>
@@ -39,18 +40,17 @@ layout: default
 
     <h2>Tools</h2>
 
-    <img style="float: right; margin-left: 10px;" src="/images/chengine/chengine_toolchain_overview.png" />
+    <img style="float: right; margin-left: 10px;" src="/images/chengine/chengine_toolchain_overview.png">
     <p>To support the dynamic nature of Chengine, the tools needed the ability to communicate with the engine. The Game Tools Communication Host (Host in the image) runs a WCF service that the engine and tools connect to. Clients communicate by sending events to the host, and then polling the host periodically. The host connects to a MongoDB server that stores levels and their actors. Using this design, the tools and game are all isolated from eachother and from the actual level storage. This allows a lot of flexibility since you can easily create new tools and have them interacting without worrying about compatability with the other tools, all they need to know is how to create/send events. This also allows the backing level storage to change without affecting anything but the Host. The level can be modified without requiring the game to be running.</p>
     
+    <br>
 
-    <br/>
+    <div class="gallery">
+        <img id="chengine_galleryImage" class="galleryImage" width="768" height="432">
+        <div id="chengine_galleryList" style="float: right; width: 180px"></div>
+    </div>
 
-<div class="gallery">
-    <p id="chengine_prevImage" class="galleryButton">prev</p>
-    <img id="chengine_galleryImage" class="galleryImage" width="768" height="432"/>
-    <p id="chengine_nextImage" class="galleryButton">next</p>
-</div>
-
+    <div style="clear: both;"></div>
 
 </div>
 

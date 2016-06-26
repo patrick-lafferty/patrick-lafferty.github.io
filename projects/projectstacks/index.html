@@ -7,12 +7,11 @@ layout: default
 
 {% include projectNavbar.html %}
 
-<div class="home project">
-
-
-    <div style="z-index=50; position: fixed; top: 0px; left: 0px;">
-        <img id="projectStacks_fullsizeGalleryImage" tabindex="0"/>
+    <div style="z-index:5; position: fixed; width: 100%; height:100%; top: 0; background: rgba(0,0,0,0.75); display: none; transform: translateX(-25%);" >
+        <img id="projectStacks_fullsizeGalleryImage" tabindex="0" style="margin-left: auto; margin-right: auto; display: block;">
     </div>
+
+<div class="home project">
 
     <h1 id="ProjectStacks">Project Stacks</h2>
     <p>Project Stacks was the first iteration of Wooden Sphere, written from the ground up using my own engine. It was writen in C++, and used D3D11, Bullet Physics, and Recast Navigation. I took the lessons learned from working on Chengine and applied them in a much cleaner way. It featured:</p>
@@ -33,22 +32,24 @@ layout: default
     </ul>
 
     This project was cancelled and the game was ported to the Unreal Engine.
-    <br/><br/>
+    <br><br>
 
     <h2 id="assetManager">Asset Manager <a href="https://github.com/patrick-lafferty/AssetManager">(github)</a></h2>
-<div class="gallery">
-    <p id="assetManager_prevImage" class="galleryButton">prev</p>
-    <img id="assetManager_galleryImage" class="galleryImage" wih3h="768" height="432"/>
-    <p id="assetManager_nextImage" class="galleryButton">next</p>
-</div>
+    
+    <div class="gallery">
+        <img id="assetManager_galleryImage" class="galleryImage" width="768" height="432">
+        <div id="assetManager_galleryList" style="float: right; width: 180px"></div>
+    </div>
+
+    <div style="clear:both;"></div>
 
     <p>The Asset Manager was the solution to a reoccuring problem faced in Chengine: invalid assets being loaded at runtime. Most assets need some form of compiling/converting to go from text files to their associated binary counterparts like shaders. Due to Chengine's principle of being as dynamic as possible, assets were compiled at runtime so you could quickly make edits to them or create new ones while the game was running, and be able to test them without having to restart the engine. The problem was that shaders and scripts could fail to compile, falling back to older versions of the asset or just a default placeholder, and while editing actors you had no way of knowing which assets would actually work or not when assigning them (eg MyActor's Script field being assigned FaulyScript.cs). This was compounded with the fact that the engine was constantly changing, and breaking changes could cause a previously valid asset to no longer be valid, due to format changes or something similar. So assets became a bit of a minefield, and thus my partner did not enjoy the level editing experience.</p>
 
-    <br/>
+    <br>
 
     <p>Enter Asset Manager. The main goal was making things robust again by acting as a guard between the engine and the editor. In order for assets to be used by the editor, they must first be imported into the Asset Manager. Importing involves compiling (if required by the asset type), and then converting to a custom binary format that made it simple for the engine to load: memcpy'ing in the optimal case instead of text parsing. If there was an error at any point in compiling/converting, the user would be told the exact reason(s) and location(s) if applicable, and the asset would not be imported, which means you could not find it in the level editor. It also gracefully handled engine format changes. Any time an asset's format changed (say an extra flag was added to all shader assets), the Asset Manager would automatically re-import all assets of that type and log+remove any that failed to conform to the new format. Also, when the manager first loads it checks the timestamps of all asset sources to see if any were changed while the manager was offline and if so it would re-import them. The result was a drastic reduction in bugs caused by buggy assets, and a happier game designer.</p>
 
-    <br/>
+    <br>
 
     <p>The Asset Manager was written in C# using WPF, with individual asset converters written in C++.</p>
 

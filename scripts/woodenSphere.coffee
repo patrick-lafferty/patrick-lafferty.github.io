@@ -8,8 +8,6 @@
         viewerId:  "woodenSphere_galleryImage"
         fullsizeViewerId: "woodenSphere_fullsizeGalleryImage"
         galleryList: "woodenSphere_galleryList"
-        prevImg: "woodenSphere_prevImage"
-        nextImg: "woodenSphere_nextImage"
     },
     {
         previews: ["/images/woodenSphere/preview/taskEditor.png", "/images/woodenSphere/preview/scenarioEvaluator.png"]
@@ -17,8 +15,6 @@
         viewerId: "considerationEditor_galleryImage"
         fullsizeViewerId: "woodenSphere_fullsizeGalleryImage"
         galleryList: "considerationEditor_galleryList"
-        prevImg: "considerationEditor_prevImage"
-        nextImg: "considerationEditor_nextImage"
     }
 ]
 

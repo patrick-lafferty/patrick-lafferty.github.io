@@ -7,26 +7,9 @@ layout: default
 <div class="home">
 
 
-<!--<nav class="nav wrapper projectNavbar">
-{% assign pages = site.projects | sort:"weight" %}
-<ul>
-    {% for p in pages %}
-    <li>
-        <a {% if p.link == page.url %} class="active" {% endif %} href="{{ p.link }}">
-            {{ p.title }}
-        </a>
-    </li>
-    {% endfor %}
-</ul>
-</nav>
--->
-
 {% include projectNavbar.html %}
 
 <p>Here are some projects I've made. You can use the above links for individual in-depth project pages, or see the brief summaries below.</p>
-
-
-<!--<h1>Project Summaries</h1>-->
 
     {% assign projects= site.projects | sort:"weight" %}
     {% for project in projects %}
