@@ -12,10 +12,17 @@ layout: default
     <h1 id="woodenSphere">Wooden Sphere</h2>
 
 <div class="gallery">
-    <p id="woodenSphere_prevImage" class="galleryButton">prev</p>
+    <!--    <p id="woodenSphere_prevImage" class="galleryButton">prev</p>-->
     <img id="woodenSphere_galleryImage" class="galleryImage" width="768" height="432"/>
-    <p id="woodenSphere_nextImage" class="galleryButton">next</p>
+    <div id="woodenSphere_galleryList" style="float: right; width: 180px" />
+    <!--    <p id="woodenSphere_nextImage" class="galleryButton">next</p>-->
 </div>
+
+<div style="z-index=5; position: fixed; top: 0px; left: 0px;">
+    <img id="woodenSphere_fullsizeGalleryImage" tabindex="0"/>
+</div>
+
+<div style="clear:both;" />
 
 <h2>Game</h2>
 
@@ -44,10 +51,13 @@ layout: default
 
     <h2 id="considerationEditor">Consideration Editor</h2>
 <div class="gallery">
-    <p id="considerationEditor_prevImage" class="galleryButton">prev</p>
+    <!--    <p id="considerationEditor_prevImage" class="galleryButton">prev</p>-->
     <img id="considerationEditor_galleryImage" class="galleryImage" width="768" height="432"/>
-    <p id="considerationEditor_nextImage" class="galleryButton">next</p>
+    <div id="considerationEditor_galleryList" style="float: right; width: 180px" />
+        <!--<p id="considerationEditor_nextImage" class="galleryButton">next</p>-->
 </div>
+
+<div style="clear:both;" />
     
     <p>The consideration editor allows you to define the evaluator function, along with other properties. In order to make it easier to understand how a certain task would be scored in a given situation I also wrote a scenario evaluator. This gives you an editor to set current AI state along with which tasks you would like to see. It then sorts tasks by their final score, and each consideration in each task by their individual scores, so you can get a good idea of how tasks behave in different situations. There is also a live scenario evaluator that plugs into the game when its running, it attaches itself to one AI character and continously reads that AI's state, re-evaluating and sorting tasks each second. This gives a view into how the character is thinking during gameplay.</p>
 
