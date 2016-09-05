@@ -1,15 +1,31 @@
 ---
 layout: default
 ---
-<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+<div class="home">
+	<div style="float: left; width: 200px;">
+		<h3>Recent posts</h3>
+		{% for post in site.posts limit:5 %}
+		<ul>
+			<li><a href="{{ post.url }}">{{post.title}}</a></li>
+		</ul>
+		{% endfor %}
 
-  <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">{{ page.title }}</h1>
-    <p class="post-meta"><time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: "%b %-d, %Y" }}</time>{% if page.author %} • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">{{ page.author }}</span></span>{% endif %}</p>
-  </header>
+		<h3>Tags</h3>
+		{% for tag in site.tags %}
+		<a href="/blog/tags.html#{{tag | first}}">{{ tag | first }} ({{tag[1].size}})</a>
+		{% endfor %}
+	</div>
 
-  <div class="post-content" itemprop="articleBody">
-    {{ content }}
-  </div>
+	<article style="margin-left: 200px" class="post" itemscope itemtype="http://schema.org/BlogPosting">
+		<div class="home">
+		  <header class="post-header">
+		    <h1 class="post-title" itemprop="name headline">{{ page.title }}</h1>
+		    <p class="post-meta"><time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: "%b %-d, %Y" }}</time>{% if page.author %} • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">{{ page.author }}</span></span>{% endif %}</p>
+		  </header>
 
-</article>
+		  <div class="post-content" itemprop="articleBody">
+		    {{ content }}
+		  </div>
+		</div>
+	</article>
+</div>

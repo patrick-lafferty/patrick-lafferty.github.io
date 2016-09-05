@@ -16,7 +16,7 @@
         <ul>
             {% for p in pages %}
             <li>
-                <a {% if p.link == page.url %} class="active" {% endif %} href="{{ p.link }}">
+                <a {% if p.link == page.url or page.url contains p.link and p.link != "/" %} class="active" {% endif %} href="{{ p.link }}">
                     {{ p.title }}
                 </a>
             </li>
