@@ -30,15 +30,14 @@ liquid:
 
 paginate: 10
 paginate_path: "/blog/page:num/"
-#permalink: /blog/:year/:month/:day/:title/
 
-defaults:
-        -
-          scope:
-                  path: ""
-                  type: "posts"
-          values:
-                  permalink: /blog/:year/:month/:day/:title/
+#defaults:
+#        -
+#          scope:
+#                  path: ""
+#                  type: "posts"
+#          values:
+#                  permalink: /blog/:year/:month/:day/:title/
 
 collections:
     projects:
