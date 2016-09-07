@@ -25,6 +25,8 @@ gems:
     - jekyll-paginate
     - github-pages
 
+exclude: [vendor]
+
 paginate: 10
 paginate_path: "/blog/page:num/"
 #permalink: /blog/:year/:month/:day/:title/
