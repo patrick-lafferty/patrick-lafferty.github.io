@@ -23,7 +23,9 @@ layout: default
 		{% for post in paginator.posts %}
 		<div>
 			<h2 style="display: inline"><a href="{{ post.url }}">{{post.title}}</a></h2>
-			<span style="margin-left: 20px">{{post.date | date: '%B %d, %Y'}}</span>
+			{% if post.date %}
+				<span style="margin-left: 20px">{{post.date | date: '%B %d, %Y'}}</span>
+			{% endif %}
 			{{post.content}}
 		</div>
 		{% endfor %}
