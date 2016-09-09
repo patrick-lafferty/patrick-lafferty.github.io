@@ -7,10 +7,6 @@ function Gallery(viewer, fullsizeViewer, previewSources, fullsizeSources) {
 	this.fullsizeSources = fullsizeSources;		
 	this.index = 0;
     this.viewer.src = previewSources[this.index]
-
-	this.fullsizeViewer.addEventListener('load', function () {
-			this.style.transform = "translateX(" + /*window.screen.width*/ window.innerWidth/4 + "px)";
-		}, false);
 }
 
 Gallery.prototype.showPreviousImage = function () {
@@ -31,23 +27,18 @@ Gallery.prototype.setIndex = function (i) {
 Gallery.prototype.showFullsize = function() {
 	this.fullsizeViewer.parentNode.style.display = "block";
 	this.fullsizeViewer.focus();
-	/*var img = new Image();
-	var viewer = this.fullsizeViewer;
-	//viewer.parentNode.style.width = window.screen.width + 'px';
-	//viewer.parentNode.style.left = '0px';
-	//viewer.style.left = '0px';
 
+	var img = new Image();
+	var viewer = this.fullsizeViewer;
 	img.onload = function () {
 		viewer.src = this.src;
-		//works: viewer.style.width = '1280px';// + window.screen.width + 'px' ;//'300px';
-		//works: viewer.parentNode.style.width = '1280px';// + window.screen.width + 'px';//'300px';
-		if (this.width > window.innerWidth) { //screen.width) {
-			//viewer.width = window.screen.width;
+
+		if (this.height < window.innerHeight) {
+			viewer.style.transform = 'translateY(' + this.height / 2 + 'px)';
 		}
 	};
 
-	img.src = this.fullsizeSources[this.index];*/
-	this.fullsizeViewer.src = this.fullsizeSources[this.index];
+	img.src = this.fullsizeSources[this.index];
 };
 
 Gallery.prototype.hideFullsize = function () {
