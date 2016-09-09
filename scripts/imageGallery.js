@@ -9,10 +9,7 @@ function Gallery(viewer, fullsizeViewer, previewSources, fullsizeSources) {
     this.viewer.src = previewSources[this.index]
 
 	this.fullsizeViewer.addEventListener('load', function () {
-			//this.style.transform = "translateY(" + (window.screen.height/2) + "px)";
-			//this.style.transform = "translateX(" + (window.screen.width / 2) + "px)";
-		//this.fullsizeViewer.style.width = '' + window.screen.width + 'px' ;//'300px';
-		//this.fullsizeViewer.parentNode.style.width = '' + window.screen.width + 'px';//'300px';
+			this.style.transform = "translateX(" + /*window.screen.width*/ window.innerWidth/4 + "px)";
 		}, false);
 }
 
@@ -34,23 +31,23 @@ Gallery.prototype.setIndex = function (i) {
 Gallery.prototype.showFullsize = function() {
 	this.fullsizeViewer.parentNode.style.display = "block";
 	this.fullsizeViewer.focus();
-	//this.fullsizeViewer.src = this.fullsizeSources[this.index];
-	var img = new Image();
+	/*var img = new Image();
 	var viewer = this.fullsizeViewer;
+	//viewer.parentNode.style.width = window.screen.width + 'px';
+	//viewer.parentNode.style.left = '0px';
+	//viewer.style.left = '0px';
+
 	img.onload = function () {
 		viewer.src = this.src;
-		viewer.style.width = '800px';// + window.screen.width + 'px' ;//'300px';
-		viewer.parentNode.style.width = '800px';// + window.screen.width + 'px';//'300px';
-		viewer.parentNode.style.left = '0px';
-		viewer.style.left = '0px';
+		//works: viewer.style.width = '1280px';// + window.screen.width + 'px' ;//'300px';
+		//works: viewer.parentNode.style.width = '1280px';// + window.screen.width + 'px';//'300px';
+		if (this.width > window.innerWidth) { //screen.width) {
+			//viewer.width = window.screen.width;
+		}
 	};
-	img.src = this.fullsizeSources[this.index];
-	//if (this.fullsizeViewer.width > window.screen.width) {
-		//this.fullsizeViewer.width = window.screen.width;
-		//this.fullsizeViewer.style.width = '' + window.screen.width + 'px' ;//'300px';
-		//this.fullsizeViewer.parentNode.style.width = '' + window.screen.width + 'px';//'300px';
-	//}
 
+	img.src = this.fullsizeSources[this.index];*/
+	this.fullsizeViewer.src = this.fullsizeSources[this.index];
 };
 
 Gallery.prototype.hideFullsize = function () {
