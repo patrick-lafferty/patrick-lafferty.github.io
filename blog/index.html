@@ -4,7 +4,7 @@ layout: default
 
 <div class="home">
 	
-	<div style="float: left; width: 200px;">
+	<div class="postSidebar">
 		<h3>Recent posts</h3>
 		{% for post in site.posts limit:5 %}
 		<ul>
@@ -18,10 +18,10 @@ layout: default
 		{% endfor %}
 	</div>
 
-	<div style="margin-left: 200px;">
+	<div class="post">
 
 		{% for post in paginator.posts %}
-		<div>
+		<!--<div>
 			<h2 style="display: inline"><a href="{{ post.url }}">{{post.title}}</a></h2>
 			{% if post.date %}
 				<span style="margin-left: 20px">{{post.date | date: '%B %d, %Y'}}</span>
@@ -32,7 +32,20 @@ layout: default
 			{% comment %}
 			{{post.content}}
 			{% endcomment %}
-		</div>
+		</div>-->
+		<article  itemscope itemtype="http://schema.org/BlogPosting">
+			  <header class="post-header">
+				<h1 class="post-title" itemprop="name headline">{{ post.title }}</h1>
+				{% if post.date %}
+				<p class="post-meta"><time datetime="{{ post.date | date_to_xmlschema }}" itemprop="datePublished">{{ post.date | date: "%b %-d, %Y" }}</time>{% if post.author %} • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">{{ post.author }}</span></span>{% endif %}</p>
+				{% endif %}
+			  </header>
+
+			  <div class="post-content" itemprop="articleBody">
+				{{ post.content }}
+			  </div>
+		</article>	
+
 		{% endfor %}
 
 		<div class="pagination">

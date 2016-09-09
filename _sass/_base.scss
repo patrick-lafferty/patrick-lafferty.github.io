@@ -10,6 +10,15 @@ p, blockquote, pre, hr,
     padding: 0;
 }
 
+.postSidebar {
+	float: left; 
+	width: 200px;
+}
+
+.post {
+	margin-left: 200px;
+}
+
 .projectPreviewImage {
     display: block;
     margin-left: 20px;

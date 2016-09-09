@@ -7,13 +7,13 @@ layout: default
 
 {% include projectNavbar.html %}
 
-    <div style="z-index:5; position: fixed; width: 100%; height:100%; top: 0; background: rgba(0,0,0,0.75); display: none; transform: translateX(-25%);" >
-        <img id="projectStacks_fullsizeGalleryImage" tabindex="0" style="margin-left: auto; margin-right: auto; display: block;">
-    </div>
+<div class="fullsizeGallery">
+    <img id="projectStacks_fullsizeGalleryImage" tabindex="0" class="fullsizeGalleryImage">
+</div>
 
 <div class="home project">
 
-    <h1 id="ProjectStacks">Project Stacks</h2>
+    <h1 id="ProjectStacks">Project Stacks</h1>
     <p>Project Stacks was the first iteration of Wooden Sphere, written from the ground up using my own engine. It was writen in C++, and used D3D11, Bullet Physics, and Recast Navigation. I took the lessons learned from working on Chengine and applied them in a much cleaner way. It featured:</p>
     <h3>Renderer</h3>
     <ul>
@@ -38,7 +38,7 @@ layout: default
     
     <div class="gallery">
         <img id="assetManager_galleryImage" class="galleryImage" width="768" height="432">
-        <div id="assetManager_galleryList" style="float: right; width: 180px"></div>
+        <div id="assetManager_galleryList" class="galleryList"></div>
     </div>
 
     <div style="clear:both;"></div>
