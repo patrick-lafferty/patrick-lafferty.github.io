@@ -273,3 +273,17 @@ pre {
         }
     }
 }
+
+/**
+ * Syntax highlighting
+ */
+figure > pre, 
+.code,
+code.highlighter-rouge, 
+pre > code.language-html,
+pre > code.language-html > span.nt {
+	background-color: #262626;
+	color: #19b3fe;
+}
+
+
