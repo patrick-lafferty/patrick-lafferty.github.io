@@ -42,7 +42,7 @@ I've been using bash for years, so I picked zsh to learn something new. Zsh has 
 
 Searching "why zsh" will bring up a number of good sites with examples. Along with zsh I use [powerline](http://powerline.readthedocs.io/en/master/index.html). It basically makes the prompt look cool and configures it to show useful information, along with a second prompt to the right of the screen. Finishing up the trifecta comes [Tmux](https://tmux.github.io), a terminal multiplexer. Basically it allows you to split up the screen to have multiple shells running in splitscreen mode, among other features. In the screenshot below I split the screen vertically once then split the right side horizontally. The large left pane hosts Vim, the top right is running a jekyll server that rebuilds this blogpost as I change it, the bottom right is for misc things, `wc -l *` in this example.
 
-![Dev environment screenshot]({{ site.url }}/images/blogposts/dev_environment.png)
+![Dev environment screenshot](/images/blogposts/dev_environment.png)
 
 ## Runners up
 
