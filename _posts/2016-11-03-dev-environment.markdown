@@ -26,8 +26,7 @@ For my editor I use Vim currently with powerline and vim-surround. I can't <stro
 
 and the cursor is on the beginning div line,
 
-* `>at` and `<at` increases/decreases the indent respectively of the entire div, while
-* `>it` and `<it` increase/decreases the indent of only the inner content of the div
+* `>at` and `<at` increases/decreases the indent respectively of the entire div
 * plus the standard `y`ank, `p`ut, `d`elete and `c`hange operators (and all the rest) give you a lot of control, say you wanted to change everything in the div: just type cit in normal mode and the inner contents are deleted and you are put in insert mode inside the div
 
 With vim-surround you can do things like surrounding/changing/removing things around things. So if we wanted the `<p>` and `<form>` to be inside a div we could do `ysj<div>`, or if we wanted to switch the `<p>` to a `<div>` we could do `cst<div>` with the cursor inside the `<p>`. For the yank/put/delete/change ops I originally wrote them as (y)/(p) etc but then decided to switch to use highlighting so with a simple ``cs) ` `` they changed to `` `y` `` /`` `p` ``.
